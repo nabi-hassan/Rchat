@@ -124,8 +124,13 @@ def on_join(data):
     room = data["room"]
     join_room(room)
 
-    # Broadcast that new user has joined
-    send({"msg": user + " has joined the " + room + " room."}, room=room)
+    if (room == "Anonymous"):
+        username = "Someone"
+        send({"msg": username + " has joined the " + room + " room."}, room=room)
+
+    else:
+        # Broadcast that new user has joined
+        send({"msg": user + " has joined the " + room + " room."}, room=room)
     
     messages = Message.query.filter_by(group_name=room).all()
     for msgs in messages:
