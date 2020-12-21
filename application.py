@@ -31,7 +31,7 @@ def load_user(id):
 #Initialize Flask-SocketIO
 socketio = SocketIO(app)
 # Predefined rooms for chat
-ROOMS = ["lounge", "news", "sports", "coding"]
+ROOMS = ["lounge", "news", "sports", "anonymous"]
 
 
 @app.route('/', methods = ['GET','POST'])
@@ -102,12 +102,18 @@ def on_message(data):
     room = data["room"]
     # Set timestamp
     time_stamp = time.strftime('%b-%d %I:%M%p', time.localtime())
-    """Save messages"""
-    new_msg = Message(username = username, group_name = room, date_posted = time_stamp, content = msg)
-    db.session.add(new_msg)
-    db.session.commit()
+    if (room == "Anonymous"):
+        username = "Anonymous"
+        send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=room)
 
-    send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=room)
+    else:
+        """Save messages"""
+        new_msg = Message(username = username, group_name = room, date_posted = time_stamp, content = msg)
+        db.session.add(new_msg)
+        db.session.commit()
+
+        send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=room)
+
 
 
 @socketio.on('join')
@@ -141,4 +147,4 @@ def on_leave(data):
     send({"msg": username + " has left the room"}, room=room)
 
 if __name__ == "__main__":
-    socketio.run(app)
+    socketio.run(app,debug=True)
