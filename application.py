@@ -151,5 +151,27 @@ def on_leave(data):
     leave_room(room)
     send({"msg": username + " has left the room"}, room=room)
 
+@app.route('/add', methods = ['GET', 'POST'])
+def add(ROOMS):
+    if not current_user.is_authenticated:
+        flash('Please login.', 'danger')
+        return redirect(url_for('login'))
+    
+    return render_template("chat.html", username=current_user.username, rooms=ROOMS)
+
+@socketio.on('add-room')
+def on_add(data):
+    """User creates a room"""
+
+    room = ' '.join(map(str, data["room"]))
+    global ROOMS
+    if room in ROOMS:
+        add(ROOMS)
+    else:
+        ROOMS += [room]
+        add(ROOMS)
+
+    
+
 if __name__ == "__main__":
     app.run()

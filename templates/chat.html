@@ -52,6 +52,8 @@
 
                 <!-- Sidebar start -->
                 <nav id="sidebar">
+                    <input type="text" class="add-room" id="add-a-room"><br>
+                    <button id="add-new-room" class="btn btn-warning" type="button">ADD ROOM<i class="fas fa-paper-plane"></i></button>
                     <h4>ROOMS</h4>
                     {% for room in rooms %}
                         <p id="{{ room|title }}" class="select-room cursor-pointer">{{ room|title }}</p>

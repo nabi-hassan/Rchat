@@ -138,4 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Autofocus on text box
         document.querySelector("#user_message").focus();
     }
+
+    document.querySelector('#add-new-room').onclick = () => {
+        socket.emit('add-room', {'room': document.querySelector('#add-a-room').value});
+
+        document.querySelector('#user_message').value = '';
+    };
+
+
 });
