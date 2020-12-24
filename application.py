@@ -174,4 +174,4 @@ def on_add(data):
     
 
 if __name__ == "__main__":
-    app.run()
+    socketio.run(app)
