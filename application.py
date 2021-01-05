@@ -149,7 +149,14 @@ def on_leave(data):
     username = data['username']
     room = data['room']
     leave_room(room)
-    send({"msg": username + " has left the room"}, room=room)
+    if (room == "Anonymous"):
+        username = "Someone"
+        send({"msg": username + " has left the room"}, room=room)
+
+    else:
+        # Broadcast that new user has joined
+        send({"msg": username + " has left the room"}, room=room)
+    
 
 @app.route('/add', methods = ['GET', 'POST'])
 def add(ROOMS):
@@ -174,4 +181,4 @@ def on_add(data):
     
 
 if __name__ == "__main__":
-    socketio.run(app)
+    app.run()
