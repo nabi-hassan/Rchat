@@ -13,10 +13,10 @@ from collections import OrderedDict
 app = Flask(__name__)
 #app.secret_key=os.environ.get('SECRET')
 #app.config['WTF_CSRF_SECRET_KEY'] = b"f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
-app.config['SECRET_KEY'] = 'E2C6B2E19E4A7777'
+app.config['SECRET_KEY'] = 'Secret_KEY' #you get this key from Heroku Server
 
 #Configuring Database
-app.config['SQLALCHEMY_DATABASE_URI']='postgres://xeybkmoxcrcwrm:f535f8815f0eb688aa3988a9376bccbabb413c94d275ab3b3ff152535244a9fe@ec2-35-172-246-19.compute-1.amazonaws.com:5432/d4018l2sjbnlb'
+app.config['SQLALCHEMY_DATABASE_URI']='PostgreSQL Link' #you get this key from Heroku Server free Postgresql DB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
